@@ -15,13 +15,11 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   Stopwatch stopwatch = Stopwatch();
   String dif = '0:00:00.00';
   String runBtnText = 'Start';
-  TextStyle runBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
-  TextStyle resetBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.grey ,color: Colors.black54);
+  TextStyle runBtnStyle = const TextStyle(
+      fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
+  TextStyle resetBtnStyle = const TextStyle(
+      fontSize: 32, backgroundColor: Colors.grey, color: Colors.black54);
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +37,12 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           child: Column(
             children: [
               runButton(),
-              resetButton(),
-              Text(dif, style: const TextStyle(fontSize: 32),),
+              isRun ? roundButton() : resetButton(),
+              Text(
+                dif,
+                style: const TextStyle(fontSize: 32),
+              ),
+              rounds(),
             ],
           ),
         ),
@@ -62,31 +64,59 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           setState(() {
             if (isRun) {
               runBtnText = 'Stop';
-              runBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.red, color: Colors.black);
-              resetBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.grey, color: Colors.black54);
+              runBtnStyle = const TextStyle(
+                  fontSize: 32,
+                  backgroundColor: Colors.red,
+                  color: Colors.black);
+              resetBtnStyle = const TextStyle(
+                  fontSize: 32,
+                  backgroundColor: Colors.grey,
+                  color: Colors.black54);
             } else {
               runBtnText = 'Start';
-              runBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
-              resetBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.white70, color: Colors.black);
+              runBtnStyle = const TextStyle(
+                  fontSize: 32,
+                  backgroundColor: Colors.green,
+                  color: Colors.black);
+              resetBtnStyle = const TextStyle(
+                  fontSize: 32,
+                  backgroundColor: Colors.white70,
+                  color: Colors.black);
             }
             isRun;
           });
         },
-        child: Text(runBtnText, style: runBtnStyle,));
+        child: Text(
+          runBtnText,
+          style: runBtnStyle,
+        ));
   }
 
   Widget resetButton() {
     return TextButton(
+      onPressed: () {
+        if (!isRun) {
+          stopwatch.reset();
+          setState(() {
+            dif = '0:00:00.00';
+          });
+        }
+      },
+      child: Text(
+        'Reset',
+        style: resetBtnStyle,
+      ),
+    );
+  }
+
+  Widget roundButton() {
+    return TextButton(
         onPressed: () {
-          if (!isRun) {
-            stopwatch.reset();
-            setState(() {
-              dif = '0:00:00.00';
-            });
+          if (isRun) {
+            stopwatch.setRound();
           }
         },
-        child: Text('Reset', style: resetBtnStyle,),
-    );
+        child: Text('Round', style: resetBtnStyle,));
   }
 
   Future show() async {
@@ -96,5 +126,17 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         dif = stopwatch.difference();
       });
     }
+  }
+
+  Widget rounds() {
+    List<Text> data = [];
+    for (Duration round in stopwatch.getRounds()) {
+      data.add(Text(round.toString()));
+    }
+    return Column(
+      children: [
+        ...data
+      ],
+    );
   }
 }

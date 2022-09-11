@@ -1,8 +1,8 @@
 class Stopwatch {
   DateTime? start;
   DateTime? stop;
-  List<DateTime> rounds = [];
-  Duration? clock = const Duration();
+  List<Duration> rounds = [];
+  Duration clock = const Duration();
 
   Stopwatch();
 
@@ -15,12 +15,16 @@ class Stopwatch {
     stop = DateTime.now();
   }
 
-  void round() {
-    rounds.add(DateTime.now());
+  void setRound() {
+    rounds.add(DateTime.now().difference(start!));
+  }
+
+  List getRounds() {
+    return rounds;
   }
 
   String difference() {
-    clock = clock! + DateTime.now().difference(start!) ;
+    clock = clock + DateTime.now().difference(start!) ;
     String time = clock.toString();
     return time.substring(0, time.length-4);
   }
