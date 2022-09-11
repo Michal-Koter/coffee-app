@@ -13,9 +13,10 @@ class StopwatchScreen extends StatefulWidget {
 class _StopwatchScreenState extends State<StopwatchScreen> {
   bool isRun = false;
   Stopwatch stopwatch = Stopwatch();
-  String dif = '00:00:00.00';
-  String buttonText = 'Start';
-  TextStyle buttonStyle =  TextStyle(fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
+  String dif = '0:00:00.00';
+  String runBtnText = 'Start';
+  TextStyle runBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
+  TextStyle resetBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.grey ,color: Colors.black54);
 
   @override
   void initState() {
@@ -37,7 +38,8 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
-              button(context),
+              runButton(),
+              resetButton(),
               Text(dif, style: const TextStyle(fontSize: 32),),
             ],
           ),
@@ -46,7 +48,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     );
   }
 
-  Widget button(context) {
+  Widget runButton() {
     return TextButton(
         onPressed: () {
           if (isRun) {
@@ -59,16 +61,32 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           }
           setState(() {
             if (isRun) {
-              buttonText = 'Stop';
-              buttonStyle =  TextStyle(fontSize: 32, backgroundColor: Colors.red, color: Colors.black);
+              runBtnText = 'Stop';
+              runBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.red, color: Colors.black);
+              resetBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.grey, color: Colors.black54);
             } else {
-              buttonText = 'Start';
-              buttonStyle =  TextStyle(fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
+              runBtnText = 'Start';
+              runBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
+              resetBtnStyle = const TextStyle(fontSize: 32, backgroundColor: Colors.white70, color: Colors.black);
             }
             isRun;
           });
         },
-        child: Text(buttonText, style: buttonStyle,));
+        child: Text(runBtnText, style: runBtnStyle,));
+  }
+
+  Widget resetButton() {
+    return TextButton(
+        onPressed: () {
+          if (!isRun) {
+            stopwatch.reset();
+            setState(() {
+              dif = '0:00:00.00';
+            });
+          }
+        },
+        child: Text('Reset', style: resetBtnStyle,),
+    );
   }
 
   Future show() async {

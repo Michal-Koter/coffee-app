@@ -1,7 +1,7 @@
 class Stopwatch {
   DateTime? start;
-  List<DateTime> rounds = [];
   DateTime? stop;
+  List<DateTime> rounds = [];
   Duration? clock = const Duration();
 
   Stopwatch();
@@ -23,6 +23,13 @@ class Stopwatch {
     clock = clock! + DateTime.now().difference(start!) ;
     String time = clock.toString();
     return time.substring(0, time.length-4);
+  }
+
+  void reset() {
+    start = null;
+    stop = null;
+    rounds = [];
+    clock = const Duration();
   }
 
   @override
