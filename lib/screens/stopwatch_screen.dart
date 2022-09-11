@@ -39,9 +39,6 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             children: [
               button(context),
               Text(dif, style: const TextStyle(fontSize: 32),),
-              Text(isRun.toString()),
-              Text(stopwatch.start.toString()),
-              Text(stopwatch.end.toString())
             ],
           ),
         ),
@@ -75,8 +72,8 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   }
 
   Future show() async {
-    while (isRun && stopwatch.getEnd() == null) {
-      await Future.delayed(const Duration(milliseconds: 1), () {});
+    while (isRun && stopwatch.getStop() == null) {
+      await Future.delayed(const Duration(milliseconds: 50), () {});
       setState(() {
         dif = stopwatch.difference();
       });

@@ -1,4 +1,5 @@
 import 'package:first_app/screens/calculator_screen.dart';
+import 'package:first_app/screens/stopwatch_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/intro_screen.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const IntroScreen(),
         '/calculator': (context) => const Calculator(),
+        '/stopwatch' : (context) => const StopwatchScreen(),
       },
       initialRoute: '/',
     );

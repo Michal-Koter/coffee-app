@@ -1,17 +1,18 @@
 class Stopwatch {
   DateTime? start;
-  late List<DateTime> rounds;
-  DateTime? end;
+  List<DateTime> rounds = [];
+  DateTime? stop;
+  Duration? clock = const Duration();
 
   Stopwatch();
 
   void setStart() {
     start = DateTime.now();
-    end = null;
+    stop = null;
   }
 
   void setStop() {
-    end = DateTime.now();
+    stop = DateTime.now();
   }
 
   void round() {
@@ -19,7 +20,8 @@ class Stopwatch {
   }
 
   String difference() {
-    String time = DateTime.now().difference(start!).toString();
+    clock = clock! + DateTime.now().difference(start!) ;
+    String time = clock.toString();
     return time.substring(0, time.length-4);
   }
 
@@ -28,8 +30,8 @@ class Stopwatch {
     return start.toString();
   }
 
-  DateTime? getEnd() {
-    return end;
+  DateTime? getStop() {
+    return stop;
   }
 
   DateTime? getStart() {
