@@ -16,8 +16,15 @@ class Stopwatch {
   }
 
   void setRound() {
-    rounds.isEmpty ? rounds.add(DateTime.now().difference(start!)) : rounds.add(clock-rounds.last);
-
+    if (rounds.isEmpty) {
+      rounds.add(DateTime.now().difference(start!));
+      return;
+    }
+    if (clock == '0:00:00.000000') {
+     rounds.add(DateTime.now().difference(start!) - rounds.last);
+     return;
+    }
+    rounds.add(DateTime.now().difference(start!)+clock-rounds.last);
   }
 
   List getRounds() {
