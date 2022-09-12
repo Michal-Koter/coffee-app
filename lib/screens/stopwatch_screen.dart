@@ -126,12 +126,15 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         dif = stopwatch.difference();
       });
     }
+    stopwatch.clock = stopwatch.clock + DateTime.now().difference(stopwatch.start!) ;
   }
 
   Widget rounds() {
     List<Text> data = [];
     for (Duration round in stopwatch.getRounds()) {
-      data.add(Text(round.toString()));
+      String massage = round.toString();
+      massage = massage.substring(0, massage.length-4);
+      data.add(Text(massage,));
     }
     return Column(
       children: [

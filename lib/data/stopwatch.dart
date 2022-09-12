@@ -16,7 +16,8 @@ class Stopwatch {
   }
 
   void setRound() {
-    rounds.add(DateTime.now().difference(start!));
+    rounds.isEmpty ? rounds.add(DateTime.now().difference(start!)) : rounds.add(clock-rounds.last);
+
   }
 
   List getRounds() {
@@ -24,8 +25,8 @@ class Stopwatch {
   }
 
   String difference() {
-    clock = clock + DateTime.now().difference(start!) ;
-    String time = clock.toString();
+    Duration dur = clock + DateTime.now().difference(start!);
+    String time = dur.toString();
     return time.substring(0, time.length-4);
   }
 
