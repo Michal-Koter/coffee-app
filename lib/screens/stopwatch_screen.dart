@@ -20,7 +20,6 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   TextStyle resetBtnStyle = const TextStyle(
       fontSize: 32, backgroundColor: Colors.grey, color: Colors.black54);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +42,8 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                 style: const TextStyle(fontSize: 32),
               ),
               rounds(),
+              if(isRun)
+              currentRound(),
             ],
           ),
         ),
@@ -116,7 +117,10 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
             stopwatch.setRound();
           }
         },
-        child: Text('Round', style: resetBtnStyle,));
+        child: Text(
+          'Round',
+          style: resetBtnStyle,
+        ));
   }
 
   Future show() async {
@@ -126,20 +130,31 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         dif = stopwatch.difference();
       });
     }
-    stopwatch.clock = stopwatch.clock + DateTime.now().difference(stopwatch.start!) ;
+    stopwatch.clock =
+        stopwatch.clock + DateTime.now().difference(stopwatch.start!);
   }
 
   Widget rounds() {
     List<Text> data = [];
-    for (int i=0;i<stopwatch.rounds.length;i++) {
+    for (int i = 0; i < stopwatch.rounds.length; i++) {
       String massage = stopwatch.rounds[i].toString();
-      massage = massage.substring(0, massage.length-4);
-      data.add(Text('${i+1} round: $massage',));
+      massage = massage.substring(0, massage.length - 4);
+      data.add(Text(
+        '${i + 1} round: $massage',
+      ));
     }
     return Column(
-      children: [
-        ...data
-      ],
+      children: [...data],
     );
+  }
+
+  Widget currentRound() {
+    if (stopwatch.start != null) {
+      Duration round = stopwatch.runningTime();
+      String massage = round.toString();
+      massage = massage.substring(0,massage.length-4);
+      return Text('${stopwatch.rounds.length + 1} round: $massage');
+    }
+    return const Text('');
   }
 }

@@ -13,22 +13,25 @@ class Stopwatch {
 
   void setStop() {
     stop = DateTime.now();
+    setRound();
   }
 
-  void setRound() {
+  Duration runningTime() {
     if (rounds.isEmpty) {
-      rounds.add(DateTime.now().difference(start!));
-      return;
+      return DateTime.now().difference(start!);
     }
     if (clock == '0:00:00.000000') {
-     rounds.add(DateTime.now().difference(start!) - rounds.last);
-     return;
+      return DateTime.now().difference(start!) - rounds.last;
     }
-    Duration timeBefore = Duration();
+    Duration timeBefore = const Duration();
     for (Duration round in rounds) {
       timeBefore += round;
     }
-    rounds.add(DateTime.now().difference(start!)+clock-timeBefore);
+    return DateTime.now().difference(start!) + clock - timeBefore;
+  }
+
+  void setRound() {
+    rounds.add(runningTime());
   }
 
   List getRounds() {
@@ -38,7 +41,7 @@ class Stopwatch {
   String difference() {
     Duration dur = clock + DateTime.now().difference(start!);
     String time = dur.toString();
-    return time.substring(0, time.length-4);
+    return time.substring(0, time.length - 4);
   }
 
   void reset() {
