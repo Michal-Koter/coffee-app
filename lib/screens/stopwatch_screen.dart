@@ -131,10 +131,10 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
 
   Widget rounds() {
     List<Text> data = [];
-    for (Duration round in stopwatch.getRounds()) {
-      String massage = round.toString();
+    for (int i=0;i<stopwatch.rounds.length;i++) {
+      String massage = stopwatch.rounds[i].toString();
       massage = massage.substring(0, massage.length-4);
-      data.add(Text(massage,));
+      data.add(Text('${i+1} round: $massage',));
     }
     return Column(
       children: [
