@@ -24,7 +24,11 @@ class Stopwatch {
      rounds.add(DateTime.now().difference(start!) - rounds.last);
      return;
     }
-    rounds.add(DateTime.now().difference(start!)+clock-rounds.last);
+    Duration timeBefore = Duration();
+    for (Duration round in rounds) {
+      timeBefore += round;
+    }
+    rounds.add(DateTime.now().difference(start!)+clock-timeBefore);
   }
 
   List getRounds() {
