@@ -15,10 +15,14 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   Stopwatch stopwatch = Stopwatch();
   String dif = '0:00:00.00';
   String runBtnText = 'Start';
-  TextStyle runBtnStyle = const TextStyle(
-      fontSize: 32, backgroundColor: Colors.green, color: Colors.black);
-  TextStyle resetBtnStyle = const TextStyle(
-      fontSize: 32, backgroundColor: Colors.grey, color: Colors.black54);
+  Color runBtnColor = Colors.green;
+  ButtonStyle resetBtnStyle = OutlinedButton.styleFrom(
+    primary: Colors.black,
+    backgroundColor: Colors.grey,
+    textStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+    padding: const EdgeInsets.all(16),
+    shape: const StadiumBorder(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +46,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                 style: const TextStyle(fontSize: 32),
               ),
               rounds(),
-              if(isRun)
-              currentRound(),
+              if (isRun) currentRound(),
             ],
           ),
         ),
@@ -52,49 +55,42 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   }
 
   Widget runButton() {
-    return TextButton(
-        onPressed: () {
+    return OutlinedButton(
+      onPressed: () {
+        if (isRun) {
+          isRun = false;
+          stopwatch.setStop();
+        } else {
+          isRun = true;
+          stopwatch.setStart();
+          show();
+        }
+        setState(() {
           if (isRun) {
-            isRun = false;
-            stopwatch.setStop();
+            runBtnText = 'Stop';
+            runBtnColor = Colors.red;
           } else {
-            isRun = true;
-            stopwatch.setStart();
-            show();
+            runBtnText = 'Start';
+            runBtnColor = Colors.green;
           }
-          setState(() {
-            if (isRun) {
-              runBtnText = 'Stop';
-              runBtnStyle = const TextStyle(
-                  fontSize: 32,
-                  backgroundColor: Colors.red,
-                  color: Colors.black);
-              resetBtnStyle = const TextStyle(
-                  fontSize: 32,
-                  backgroundColor: Colors.grey,
-                  color: Colors.black54);
-            } else {
-              runBtnText = 'Start';
-              runBtnStyle = const TextStyle(
-                  fontSize: 32,
-                  backgroundColor: Colors.green,
-                  color: Colors.black);
-              resetBtnStyle = const TextStyle(
-                  fontSize: 32,
-                  backgroundColor: Colors.white70,
-                  color: Colors.black);
-            }
-            isRun;
-          });
-        },
-        child: Text(
-          runBtnText,
-          style: runBtnStyle,
-        ));
+          isRun;
+        });
+      },
+      style: OutlinedButton.styleFrom(
+        primary: Colors.black,
+        backgroundColor: runBtnColor,
+        textStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        padding: const EdgeInsets.all(16),
+        shape: const StadiumBorder(),
+      ),
+      child: Text(
+        runBtnText,
+      ),
+    );
   }
 
   Widget resetButton() {
-    return TextButton(
+    return OutlinedButton(
       onPressed: () {
         if (!isRun) {
           stopwatch.reset();
@@ -103,23 +99,23 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
           });
         }
       },
-      child: Text(
+      style: resetBtnStyle,
+      child: const Text(
         'Reset',
-        style: resetBtnStyle,
       ),
     );
   }
 
   Widget roundButton() {
-    return TextButton(
+    return OutlinedButton(
         onPressed: () {
           if (isRun) {
             stopwatch.setRound();
           }
         },
-        child: Text(
+        style: resetBtnStyle,
+        child: const Text(
           'Round',
-          style: resetBtnStyle,
         ));
   }
 
@@ -152,7 +148,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     if (stopwatch.start != null) {
       Duration round = stopwatch.runningTime();
       String massage = round.toString();
-      massage = massage.substring(0,massage.length-4);
+      massage = massage.substring(0, massage.length - 4);
       return Text('${stopwatch.rounds.length + 1} round: $massage');
     }
     return const Text('');
