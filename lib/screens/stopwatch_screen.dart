@@ -34,16 +34,29 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       ),
       drawer: const MenuDrawer(),
       bottomNavigationBar: const MenuBottom(),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
+      body: Padding(
+        padding: EdgeInsets.only(left: 5, right: 5, top: 160),
+        child: Center(
           child: Column(
             children: [
-              runButton(),
-              isRun ? roundButton() : resetButton(),
               Text(
                 dif,
-                style: const TextStyle(fontSize: 32),
+                style: const TextStyle(fontSize: 68),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 80, bottom: 24),
+                child: Wrap(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 52),
+                      child: isRun ? roundButton() : resetButton(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 52),
+                      child: runButton(),
+                    ),
+                  ],
+                ),
               ),
               rounds(),
               if (isRun) currentRound(),
@@ -137,6 +150,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       massage = massage.substring(0, massage.length - 4);
       data.add(Text(
         '${i + 1} round: $massage',
+        style: const TextStyle(fontSize: 24),
       ));
     }
     return Column(
@@ -149,7 +163,10 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       Duration round = stopwatch.runningTime();
       String massage = round.toString();
       massage = massage.substring(0, massage.length - 4);
-      return Text('${stopwatch.rounds.length + 1} round: $massage');
+      return Text(
+        '${stopwatch.rounds.length + 1} round: $massage',
+        style: const TextStyle(fontSize: 24),
+      );
     }
     return const Text('');
   }
