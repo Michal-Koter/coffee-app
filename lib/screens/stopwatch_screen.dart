@@ -35,7 +35,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       drawer: const MenuDrawer(),
       bottomNavigationBar: const MenuBottom(),
       body: Padding(
-        padding: EdgeInsets.only(left: 5, right: 5, top: 160),
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 160),
         child: Center(
           child: Column(
             children: [
@@ -44,7 +44,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                 style: const TextStyle(fontSize: 68),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 80, bottom: 24),
+                padding: const EdgeInsets.only(top: 80, bottom: 24),
                 child: Wrap(
                   children: [
                     Padding(
@@ -58,8 +58,14 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                   ],
                 ),
               ),
-              rounds(),
-              if (isRun) currentRound(),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Column(
+                      children: [...rounds(), if (isRun) currentRound()],
+                    ),
+                  ],
+              )),
             ],
           ),
         ),
@@ -143,7 +149,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         stopwatch.clock + DateTime.now().difference(stopwatch.start!);
   }
 
-  Widget rounds() {
+  List<Text> rounds() {
     List<Text> data = [];
     for (int i = 0; i < stopwatch.rounds.length; i++) {
       String massage = stopwatch.rounds[i].toString();
@@ -153,9 +159,10 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         style: const TextStyle(fontSize: 24),
       ));
     }
-    return Column(
-      children: [...data],
-    );
+    //return Column(
+    //  children: [...data],
+    //);
+    return data;
   }
 
   Widget currentRound() {
