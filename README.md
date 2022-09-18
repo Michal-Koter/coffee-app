@@ -1,3 +1,3 @@
-# first_app
+# Coffee_app
 
-First app is my project during which I learn how to use Flutter.
+This is my first mobile app project. During process of development I learn how to use Flutter.
