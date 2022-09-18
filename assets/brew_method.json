@@ -1,0 +1,29 @@
+{
+  "methods": [
+    {
+      "name": "dripper",
+      "img": "dripper.jpg",
+      "screen": "dripper_screen.dart"
+    },
+    {
+      "name": "chemex",
+      "img": "chemex.jpg",
+      "screen": "chemex_screen.dart"
+    },
+    {
+      "name": "aeropress",
+      "img": "aeropress.jpg",
+      "screen": "aeropress_screen.dart"
+    },
+    {
+      "name": "moka pot",
+      "img": "moka-pot.jpg",
+      "screen": "moka_screen.dart"
+    },
+    {
+      "name": "french press",
+      "img": "french-press.jpg",
+      "screen": "french_screen.dart"
+    }
+  ]
+}

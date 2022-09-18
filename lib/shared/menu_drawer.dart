@@ -1,3 +1,4 @@
+import 'package:first_app/screens/brew_screen.dart';
 import 'package:first_app/screens/sessions_screen.dart';
 import 'package:first_app/screens/stopwatch_screen.dart';
 import 'package:first_app/screens/weather_screen.dart';
@@ -46,17 +47,20 @@ class MenuDrawer extends StatelessWidget {
               case 'Home':
                 screen = const IntroScreen();
                 break;
+              case 'Stopwatch':
+                screen = const StopwatchScreen();
+                break;
               case 'Water/Beans Calculator':
                 screen = const Calculator();
                 break;
-              case 'Weather':
-                screen = const WeatherScreen();
+              case 'Brew Methods Guide':
+                screen = const BrewMethodScreen();
                 break;
               case 'Notes':
                 screen = const SessionsScreen();
                 break;
-              case 'Stopwatch':
-                screen = const StopwatchScreen();
+              case 'Weather':
+                screen = const WeatherScreen();
                 break;
             }
             Navigator.of(context).pop();
